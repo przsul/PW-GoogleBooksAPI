@@ -1,19 +1,17 @@
 package GoogleBooksAPI;
 
-import GoogleBooksAPI.Models.ContainerGoogleBook;
 import com.google.gson.Gson;
-import com.sun.deploy.net.HttpRequest;
-import com.sun.deploy.net.HttpResponse;
+
+import GoogleBooksAPI.Controller.ListCellController;
+import GoogleBooksAPI.Models.ContainerGoogleBook;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.jcp.xml.dsig.internal.dom.ApacheCanonicalizer;
-import sun.misc.Request;
-import sun.net.www.http.HttpClient;
-
-import java.net.URI;
 
 
 public class App extends Application {
@@ -879,8 +877,33 @@ public class App extends Application {
         System.out.println(xx.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier());
 
 
+        ListCellController cell = new ListCellController();
+        Label title = new Label();
+        Label author = new Label();
+        Label year = new Label();
+        Label publisher = new Label();
+        Label isbn = new Label();
 
+        title.setText("dzieci z bulerbyn");
+        author.setText("jakis tam");
+        year.setText("2010");
+        publisher.setText("helion");
+        isbn.setText("123123");
 
+        cell.setTitle(title);
+        cell.setTitle(author);
+        cell.setTitle(year);
+        cell.setTitle(publisher);
+        cell.setTitle(isbn);
+
+        String url = "https://books.google.com/books/content?id=mVNjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api";
+        Image image = new Image(url);
+        ImageView smallThumbnail = new ImageView();
+        smallThumbnail.setImage(image);
+        
+        cell.setSmallThumbnail(smallThumbnail);
+        
+        stackPane.getChildren().add(cell);
         primaryStage.show();
     }
 }

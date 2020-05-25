@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="150.0" prefWidth="150.0">
+         <children>
+            <ImageView fx:id="smallThumbnail" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../../../Desktop/content.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <VBox prefHeight="150.0" prefWidth="400.0">
+         <children>
+            <HBox prefHeight="25.0" prefWidth="100.0">
+               <children>
+                  <Label style="-fx-font-weight: bold;" text="Tytuł:">
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="title" text="x" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="100.0">
+               <children>
+                  <Label style="-fx-font-weight: bold;" text="Autor:">
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="author" text="x" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="126.0">
+               <children>
+                  <Label style="-fx-font-weight: bold;" text="Rok wydania:">
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="year" text="x" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="100.0">
+               <children>
+                  <Label style="-fx-font-weight: bold;" text="Wydawnictwo:">
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="publisher" text="x" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="100.0">
+               <children>
+                  <Label style="-fx-font-weight: bold;" text="ISBN:">
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="isbn" text="x" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

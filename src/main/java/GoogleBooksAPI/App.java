@@ -10,14 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.jcp.xml.dsig.internal.dom.ApacheCanonicalizer;
+import sun.misc.Request;
 import sun.net.www.http.HttpClient;
 
 import java.net.URI;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 
 
 public class App extends Application {
@@ -883,11 +879,6 @@ public class App extends Application {
         System.out.println(xx.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier());
 
 
-
-        Request.Get("http://somehost/")
-                .connectTimeout(1000)
-                .socketTimeout(1000)
-                .execute().returnContent().asString();
 
 
         primaryStage.show();

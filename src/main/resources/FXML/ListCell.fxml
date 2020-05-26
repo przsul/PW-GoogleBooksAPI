@@ -2,20 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="hBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="150.0" prefWidth="150.0">
          <children>
-            <ImageView fx:id="smallThumbnail" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../../../../../../../../Desktop/content.jpg" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="smallThumbnail" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" />
          </children>
       </VBox>
       <VBox prefHeight="150.0" prefWidth="400.0">

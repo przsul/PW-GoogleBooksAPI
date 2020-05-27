@@ -2,6 +2,7 @@ package GoogleBooksAPI.Controller;
 
 import java.io.IOException;
 
+import GoogleBooksAPI.Models.ContainerGoogleBook;
 import GoogleBooksAPI.Models.ContainerGoogleBook.Item;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,21 +62,35 @@ public class ListCellCustom extends ListCell<Item> {
             title.setText(book.getVolumeInfo().getTitle());
 
             String[] authors = book.getVolumeInfo().getAuthors();
-            String authorsLabel = "";
-            for (String author : authors)
-                authorsLabel += author + ", ";
+            String authorsLabel = "brak danych";
+            if(authors != null){
+                authorsLabel = "";
+                for (String author : authors)
+                    authorsLabel += author + ", ";
+            }
+
 
             author.setText(authorsLabel);
             year.setText(book.getVolumeInfo().getPublishedDate());
             publisher.setText(book.getVolumeInfo().getPublisher());
-            isbn.setText(book.getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier());
+            String isbnString = "brak danych";
+            if(book.getVolumeInfo().getIndustryIdentifiers() != null){
+                isbnString = book.getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier();
+                isbn.setText(isbnString);
 
-            String url = book.getVolumeInfo().getImageLinks().getSmallThumbnail();
-            Image image = new Image(url);
-            smallThumbnail.setImage(image);
+            }
+
+            ContainerGoogleBook.ImageLinks imageLinks = book.getVolumeInfo().getImageLinks();
+            if(imageLinks != null){
+                String url = book.getVolumeInfo().getImageLinks().getSmallThumbnail();
+                Image image = new Image(url);
+                smallThumbnail.setImage(image);
+            }
 
             setText(null);
             setGraphic(hBox);
+
+            System.out.println("AAA");
         }
 
     }

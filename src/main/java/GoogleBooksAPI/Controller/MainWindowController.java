@@ -1,6 +1,8 @@
 package GoogleBooksAPI.Controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import com.google.gson.Gson;
 
@@ -105,7 +107,7 @@ public class MainWindowController {
     }
 
     void sendQuery(String query) {
-        new ObservableFromCallable<>(() -> Request.Get("https://www.googleapis.com/books/v1/volumes?q=" + query + "&key=AIzaSyANmYiVWSx0mZK2dXyodl-7M2dpV8yTkuY" + "&startIndex=" + returnStartIndexFromPage(actualPage) + "&maxResults=" + new Integer(maxResults).toString())
+        new ObservableFromCallable<>(() -> Request.Get("https://www.googleapis.com/books/v1/volumes?q=" + URLEncoder.encode(query, String.valueOf(StandardCharsets.UTF_8)) + "&key=AIzaSyANmYiVWSx0mZK2dXyodl-7M2dpV8yTkuY" + "&startIndex=" + returnStartIndexFromPage(actualPage) + "&maxResults=" + new Integer(maxResults).toString())
                 .connectTimeout(1000)
                 .socketTimeout(1000)
                 .execute().returnContent().asString())

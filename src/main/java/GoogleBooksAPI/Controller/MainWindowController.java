@@ -8,6 +8,7 @@ import io.reactivex.Observable;
 import io.reactivex.internal.operators.observable.ObservableFromArray;
 import io.reactivex.internal.operators.observable.ObservableFromCallable;
 import io.reactivex.rxjavafx.observables.JavaFxObservable;
+import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -107,8 +108,9 @@ public class MainWindowController {
         new ObservableFromCallable<>(() -> Request.Get("https://www.googleapis.com/books/v1/volumes?q=" + query + "&key=AIzaSyANmYiVWSx0mZK2dXyodl-7M2dpV8yTkuY" + "&startIndex=" + returnStartIndexFromPage(actualPage) + "&maxResults=" + new Integer(maxResults).toString())
                 .connectTimeout(1000)
                 .socketTimeout(1000)
-                .execute().returnContent().asString()).
-                subscribe((data) -> {
+                .execute().returnContent().asString())
+                .subscribeOn(Schedulers.io())
+                .subscribe((data) -> {
                     Gson gson = new Gson();
                     lastQuery = query;
                     booksObservableList = FXCollections.observableArrayList();
@@ -121,7 +123,7 @@ public class MainWindowController {
                     }, throwable -> {
                     }, () -> {
                         booksListView.setItems(booksObservableList);
-                        booksListView.setCellFactory(studentListView -> new ListCellCustom());
+                        booksListView.setCellFactory(studentListView -> new ListCellCustom(books));
                         System.out.println("AABBCCDDD");
                     });
                 });

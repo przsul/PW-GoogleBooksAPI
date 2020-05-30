@@ -1,9 +1,16 @@
 package GoogleBooksAPI.Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import GoogleBooksAPI.Models.ContainerGoogleBook;
 import GoogleBooksAPI.Models.ContainerGoogleBook.Item;
+import GoogleBooksAPI.Models.ImageUrl;
+import io.reactivex.internal.operators.observable.ObservableFromArray;
+import io.reactivex.internal.operators.observable.ObservableFromCallable;
+import io.reactivex.internal.operators.observable.ObservableFromIterable;
+import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -11,6 +18,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import org.apache.http.client.ClientProtocolException;
 
 public class ListCellCustom extends ListCell<Item> {
 
@@ -37,13 +45,34 @@ public class ListCellCustom extends ListCell<Item> {
 
     private FXMLLoader mLLoader;
 
-    public ListCellCustom() {}
+    private List<ImageUrl> imageUrlList = new ArrayList<>();
+
+
+    public ListCellCustom() {
+        System.out.println("AAA22");
+    }
+
+    public ListCellCustom(Item[] items){
+        new ObservableFromArray<>(items).subscribeOn(Schedulers.io()).subscribe(book -> {
+            String url = book.getVolumeInfo().getImageLinks().getSmallThumbnail();
+            Image image = new Image(url);
+            ImageUrl imageUrl = new ImageUrl();
+            imageUrl.setUrl(url);
+            imageUrl.setImage(image);
+            imageUrlList.add(imageUrl);
+        }, throwable -> {
+            throwable.printStackTrace();
+        }, () -> {
+            System.out.println("KONIEC: " + imageUrlList.size());
+
+        });
+    }
+
 
     @Override
     protected void updateItem(Item book, boolean empty) {
         super.updateItem(book, empty);
-
-        if(empty || book == null) {
+        if (empty || book == null) {
             setText(null);
             setGraphic(null);
         } else {
@@ -63,7 +92,7 @@ public class ListCellCustom extends ListCell<Item> {
 
             String[] authors = book.getVolumeInfo().getAuthors();
             String authorsLabel = "brak danych";
-            if(authors != null){
+            if (authors != null) {
                 authorsLabel = "";
                 for (String author : authors)
                     authorsLabel += author + ", ";
@@ -74,29 +103,32 @@ public class ListCellCustom extends ListCell<Item> {
             year.setText(book.getVolumeInfo().getPublishedDate());
             publisher.setText(book.getVolumeInfo().getPublisher());
             String isbnString = "brak danych";
-            if(book.getVolumeInfo().getIndustryIdentifiers() != null){
+            if (book.getVolumeInfo().getIndustryIdentifiers() != null) {
                 isbnString = book.getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier();
                 isbn.setText(isbnString);
 
             }
 
             ContainerGoogleBook.ImageLinks imageLinks = book.getVolumeInfo().getImageLinks();
-            if(imageLinks != null){
+            if (imageLinks != null) {
                 String url = book.getVolumeInfo().getImageLinks().getSmallThumbnail();
-                Image image = new Image(url);
-                smallThumbnail.setImage(image);
+                new ObservableFromIterable<ImageUrl>(imageUrlList).subscribeOn(Schedulers.io()).filter(obj -> obj.getUrl().equals(url)).subscribe(i -> {
+                    smallThumbnail.setImage(i.getImage());
+                    System.out.println("AAA333");
+                });
             }
 
             setText(null);
             setGraphic(hBox);
-
-            System.out.println("AAA");
         }
+        System.out.println("TESTTTTTTTTTTTTTTTTT");
 
     }
 
     @FXML
     void initialize() {
-
+        System.out.println("UIDFHHsDJKFHDJSKHFKDJSHFJKSDFHKDJS");
     }
+
+
 }

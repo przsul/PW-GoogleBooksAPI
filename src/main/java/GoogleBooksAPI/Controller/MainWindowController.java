@@ -9,13 +9,12 @@ import com.google.gson.Gson;
 import io.reactivex.Observable;
 import io.reactivex.internal.operators.observable.ObservableFromArray;
 import io.reactivex.internal.operators.observable.ObservableFromCallable;
+import io.reactivex.internal.operators.observable.ObservableFromIterable;
 import io.reactivex.rxjavafx.observables.JavaFxObservable;
 import io.reactivex.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
 
@@ -24,14 +23,15 @@ import GoogleBooksAPI.Models.ContainerGoogleBook.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
+
+import javax.xml.soap.Text;
 
 public class MainWindowController {
 
     @FXML
     private ListView<Item> booksListView;
 
-    private ObservableList<Item> booksObservableList;
+    private ObservableList<Item> booksObservableList = FXCollections.observableArrayList();
 
     @FXML
     private TextField queryTextField;
@@ -47,6 +47,33 @@ public class MainWindowController {
 
     @FXML
     private Label actualPageLabel;
+
+    @FXML
+    private TextField priceFromTextField;
+
+    @FXML
+    private TextField priceToTextField;
+
+    @FXML
+    private TextField pageFromTextField;
+
+    @FXML
+    private TextField pageToTextField;
+
+    @FXML
+    private CheckBox ebookCheckBox;
+
+    @FXML
+    private CheckBox avaibleCheckBox;
+
+    @FXML
+    private CheckBox pdfCheckBox;
+
+    @FXML
+    private CheckBox matureCheckBox;
+
+    @FXML
+    private Button setCryteriaButton;
 
     private int actualPage = 1;
     private int maxResults = 40;
@@ -104,6 +131,107 @@ public class MainWindowController {
             }
         });
 
+        Observable<ActionEvent> btnSetCryteriaEvent = JavaFxObservable.eventsOf(setCryteriaButton, ActionEvent.ACTION);
+
+        btnSetCryteriaEvent.subscribe(v -> {
+            if(booksObservableList.size() > 0){
+                ObservableList<Item> tmpBookList = FXCollections.observableArrayList();
+
+                if(!priceFromTextField.getText().equals("")){
+                    //Filtrujemy
+                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getSaleInfo().getRetailPrice().getAmount() >= new Float(priceFromTextField.getText()))
+                            .subscribe(item -> {
+                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
+                            });
+                }
+                if(!priceToTextField.getText().equals("")){
+
+                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getSaleInfo().getRetailPrice().getAmount() <= new Float(priceToTextField.getText()))
+                            .subscribe(item -> {
+                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
+                            });
+                }
+                if(!pageFromTextField.getText().equals("")){
+                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getVolumeInfo().getPageCount() >= new Integer(pageFromTextField.getText()))
+                            .subscribe(item -> {
+                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
+                            });
+                }
+                if(!pageToTextField.getText().equals("")){
+                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getVolumeInfo().getPageCount() <= new Integer(pageToTextField.getText()))
+                            .subscribe(item -> {
+                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
+                            });
+                }
+                if(ebookCheckBox.isSelected()){
+                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getSaleInfo().isEbook() == true)
+                            .subscribe(item -> {
+                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
+                            });
+                }
+                if(avaibleCheckBox.isSelected()){
+                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getAccessInfo().getEpub().isAvailable() == true)
+                            .subscribe(item -> {
+                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
+                            });
+                }
+                if(pdfCheckBox.isSelected()){
+                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getAccessInfo().getPdf().isAvailable() == true)
+                            .subscribe(item -> {
+                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
+                            });
+                }
+                if(matureCheckBox.isSelected()){
+                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getVolumeInfo().getMaturityRating() != "NOT_MATURE")
+                            .subscribe(item -> {
+                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
+                            });
+                }
+
+                booksListView.setItems(tmpBookList);
+                booksListView.setCellFactory(studentListView -> new ListCellCustom());
+
+
+            } else {
+                System.out.println("NIE MAM CO PRZELICZYC");
+            }
+        });
+
+        Observable<String> priceFromEvent =
+                JavaFxObservable.valuesOf(priceFromTextField.textProperty());
+
+        priceFromEvent.subscribe(v -> {
+            if (!v.matches("\\d*")) {
+                priceFromTextField.setText(v.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        Observable<String> priceToEvent =
+                JavaFxObservable.valuesOf(priceToTextField.textProperty());
+
+        priceToEvent.subscribe(v -> {
+            if (!v.matches("\\d*")) {
+                priceToTextField.setText(v.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        Observable<String> pageFromEvent =
+                JavaFxObservable.valuesOf(pageFromTextField.textProperty());
+
+        pageFromEvent.subscribe(v -> {
+            if (!v.matches("\\d*")) {
+                pageFromTextField.setText(v.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        Observable<String> pageToEvent =
+                JavaFxObservable.valuesOf(pageToTextField.textProperty());
+
+        pageToEvent.subscribe(v -> {
+            if (!v.matches("\\d*")) {
+                pageToTextField.setText(v.replaceAll("[^\\d]", ""));
+            }
+        });
 
     }
 

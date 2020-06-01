@@ -120,14 +120,9 @@ public class MainWindowController {
                     Item[] books = containerGoogleBook.getItems();
                     maxPages = (int) Math.ceil(containerGoogleBook.getTotalItems() / (float) maxResults);
                     actualPageLabel.setText("Aktualna strona: " + actualPage + "/" + maxPages);
-                    new ObservableFromArray<>(books).subscribe((book) -> {
-                        booksObservableList.add(book);
-                    }, throwable -> {
-                    }, () -> {
-                        booksListView.setItems(booksObservableList);
-                        booksListView.setCellFactory(studentListView -> new ListCellCustom(books));
-                        System.out.println("AABBCCDDD");
-                    });
+                    booksObservableList.addAll(books);
+                    booksListView.setItems(booksObservableList);
+                    booksListView.setCellFactory(studentListView -> new ListCellCustom());
                 });
     }
 

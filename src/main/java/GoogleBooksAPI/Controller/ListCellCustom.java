@@ -45,27 +45,10 @@ public class ListCellCustom extends ListCell<Item> {
 
     private FXMLLoader mLLoader;
 
-    private List<ImageUrl> imageUrlList = new ArrayList<>();
 
 
     public ListCellCustom() {
         System.out.println("AAA22");
-    }
-
-    public ListCellCustom(Item[] items){
-        new ObservableFromArray<>(items).subscribeOn(Schedulers.io()).subscribe(book -> {
-            String url = book.getVolumeInfo().getImageLinks().getSmallThumbnail();
-            Image image = new Image(url);
-            ImageUrl imageUrl = new ImageUrl();
-            imageUrl.setUrl(url);
-            imageUrl.setImage(image);
-            imageUrlList.add(imageUrl);
-        }, throwable -> {
-            throwable.printStackTrace();
-        }, () -> {
-            System.out.println("KONIEC: " + imageUrlList.size());
-
-        });
     }
 
 
@@ -111,10 +94,11 @@ public class ListCellCustom extends ListCell<Item> {
 
             ContainerGoogleBook.ImageLinks imageLinks = book.getVolumeInfo().getImageLinks();
             if (imageLinks != null) {
-                String url = book.getVolumeInfo().getImageLinks().getSmallThumbnail();
-                new ObservableFromIterable<ImageUrl>(imageUrlList).subscribeOn(Schedulers.io()).filter(obj -> obj.getUrl().equals(url)).subscribe(i -> {
-                    smallThumbnail.setImage(i.getImage());
-                    System.out.println("AAA333");
+                new ObservableFromCallable<Image>(() -> {
+                    String url = book.getVolumeInfo().getImageLinks().getSmallThumbnail();
+                    return new Image(url);
+                }).subscribeOn(Schedulers.io()).subscribe(image -> {
+                    smallThumbnail.setImage(image);
                 });
             }
 

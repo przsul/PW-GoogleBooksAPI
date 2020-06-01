@@ -47,9 +47,7 @@ public class ListCellCustom extends ListCell<Item> {
 
 
 
-    public ListCellCustom() {
-        System.out.println("AAA22");
-    }
+    public ListCellCustom() { }
 
 
     @Override
@@ -105,14 +103,9 @@ public class ListCellCustom extends ListCell<Item> {
             setText(null);
             setGraphic(hBox);
         }
-        System.out.println("TESTTTTTTTTTTTTTTTTT");
 
     }
 
-    @FXML
-    void initialize() {
-        System.out.println("UIDFHHsDJKFHDJSKHFKDJSHFJKSDFHKDJS");
-    }
 
 
 }

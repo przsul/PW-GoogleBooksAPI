@@ -11,6 +11,7 @@ import io.reactivex.internal.operators.observable.ObservableFromArray;
 import io.reactivex.internal.operators.observable.ObservableFromCallable;
 import io.reactivex.rxjavafx.observables.JavaFxObservable;
 import io.reactivex.schedulers.Schedulers;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -119,10 +120,12 @@ public class MainWindowController {
                     ContainerGoogleBook containerGoogleBook = gson.fromJson(data, ContainerGoogleBook.class);
                     Item[] books = containerGoogleBook.getItems();
                     maxPages = (int) Math.ceil(containerGoogleBook.getTotalItems() / (float) maxResults);
-                    actualPageLabel.setText("Aktualna strona: " + actualPage + "/" + maxPages);
-                    booksObservableList.addAll(books);
-                    booksListView.setItems(booksObservableList);
-                    booksListView.setCellFactory(studentListView -> new ListCellCustom());
+                    Platform.runLater(() -> {
+                        actualPageLabel.setText("Aktualna strona: " + actualPage + "/" + maxPages);
+                        booksObservableList.addAll(books);
+                        booksListView.setItems(booksObservableList);
+                        booksListView.setCellFactory(studentListView -> new ListCellCustom());
+                    });
                 });
     }
 

@@ -1,6 +1,7 @@
 package GoogleBooksAPI.Controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -141,7 +142,7 @@ public class MainWindowController {
                         .filter(item -> pageFromTextField.getText().equals("") || item.getVolumeInfo().getPageCount() >= Integer.parseInt(pageFromTextField.getText()))
                         .filter(item -> pageToTextField.getText().equals("") || item.getVolumeInfo().getPageCount() <= Integer.parseInt(pageToTextField.getText()))
                         .filter(item -> !ebookCheckBox.isSelected() || item.getSaleInfo().isEbook())
-                        .filter(item -> !avaibleCheckBox.isSelected() || item.getAccessInfo().getEpub().isAvailable())
+                        .filter(item -> !avaibleCheckBox.isSelected() || item.getSaleInfo().getSaleability().equals("FOR_SALE"))
                         .filter(item -> !pdfCheckBox.isSelected() || item.getAccessInfo().getPdf().isAvailable())
                         .filter(item -> !matureCheckBox.isSelected() || !item.getVolumeInfo().getMaturityRating().equals("NOT_MATURE"))
                         .toList()

@@ -136,14 +136,14 @@ public class MainWindowController {
         btnSetCryteriaEvent.subscribe(v -> {
             if(booksObservableList.size() > 0){
                 ObservableList<Item> tmpBookList = FXCollections.observableArrayList(new ObservableFromIterable<>(booksObservableList)
-                        .filter(item -> item.getSaleInfo().getRetailPrice() == null || item.getSaleInfo().getRetailPrice().getAmount() >= Float.parseFloat(priceFromTextField.getText()))
-                        .filter(item -> item.getSaleInfo().getRetailPrice() == null || item.getSaleInfo().getRetailPrice().getAmount() <= Float.parseFloat(priceToTextField.getText()))
+                        .filter(item -> (item.getSaleInfo().getRetailPrice() == null || priceFromTextField.getText().equals("")) || item.getSaleInfo().getRetailPrice().getAmount() >= Float.parseFloat(priceFromTextField.getText()))
+                        .filter(item -> (item.getSaleInfo().getRetailPrice() == null || priceToTextField.getText().equals("")) || item.getSaleInfo().getRetailPrice().getAmount() <= Float.parseFloat(priceToTextField.getText()))
                         .filter(item -> pageFromTextField.getText().equals("") || item.getVolumeInfo().getPageCount() >= Integer.parseInt(pageFromTextField.getText()))
                         .filter(item -> pageToTextField.getText().equals("") || item.getVolumeInfo().getPageCount() <= Integer.parseInt(pageToTextField.getText()))
-                        .filter(item -> !ebookCheckBox.isSelected() || item.getSaleInfo().isEbook() == true)
-                        .filter(item -> !avaibleCheckBox.isSelected() || item.getAccessInfo().getEpub().isAvailable() == true)
-                        .filter(item -> !pdfCheckBox.isSelected() || item.getAccessInfo().getPdf().isAvailable() == true)
-                        .filter(item -> !matureCheckBox.isSelected() || item.getVolumeInfo().getMaturityRating() != "NOT_MATURE")
+                        .filter(item -> !ebookCheckBox.isSelected() || item.getSaleInfo().isEbook())
+                        .filter(item -> !avaibleCheckBox.isSelected() || item.getAccessInfo().getEpub().isAvailable())
+                        .filter(item -> !pdfCheckBox.isSelected() || item.getAccessInfo().getPdf().isAvailable())
+                        .filter(item -> !matureCheckBox.isSelected() || !item.getVolumeInfo().getMaturityRating().equals("NOT_MATURE"))
                         .toList()
                         .blockingGet());
 

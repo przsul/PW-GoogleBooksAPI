@@ -135,58 +135,19 @@ public class MainWindowController {
 
         btnSetCryteriaEvent.subscribe(v -> {
             if(booksObservableList.size() > 0){
-                ObservableList<Item> tmpBookList = FXCollections.observableArrayList();
+                ObservableList<Item> tmpBookList = FXCollections.observableArrayList(new ObservableFromIterable<>(booksObservableList)
+                        .filter(item -> item.getSaleInfo().getRetailPrice() == null || item.getSaleInfo().getRetailPrice().getAmount() >= Float.parseFloat(priceFromTextField.getText()))
+                        .filter(item -> item.getSaleInfo().getRetailPrice() == null || item.getSaleInfo().getRetailPrice().getAmount() <= Float.parseFloat(priceToTextField.getText()))
+                        .filter(item -> pageFromTextField.getText().equals("") || item.getVolumeInfo().getPageCount() >= Integer.parseInt(pageFromTextField.getText()))
+                        .filter(item -> pageToTextField.getText().equals("") || item.getVolumeInfo().getPageCount() <= Integer.parseInt(pageToTextField.getText()))
+                        .filter(item -> !ebookCheckBox.isSelected() || item.getSaleInfo().isEbook() == true)
+                        .filter(item -> !avaibleCheckBox.isSelected() || item.getAccessInfo().getEpub().isAvailable() == true)
+                        .filter(item -> !pdfCheckBox.isSelected() || item.getAccessInfo().getPdf().isAvailable() == true)
+                        .filter(item -> !matureCheckBox.isSelected() || item.getVolumeInfo().getMaturityRating() != "NOT_MATURE")
+                        .toList()
+                        .blockingGet());
 
-                if(!priceFromTextField.getText().equals("")){
-                    //Filtrujemy
-                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getSaleInfo().getRetailPrice() == null || item.getSaleInfo().getRetailPrice().getAmount() >= Float.parseFloat(priceFromTextField.getText()))
-                            .subscribe(item -> {
-                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
-                            }, throwable -> throwable.printStackTrace(), () -> System.out.println(tmpBookList.size()));
-                }
-                if(!priceToTextField.getText().equals("")){
-                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getSaleInfo().getRetailPrice() == null || item.getSaleInfo().getRetailPrice().getAmount() <= Float.parseFloat(priceToTextField.getText()))
-                            .subscribe(item -> {
-                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
-                            }, throwable -> throwable.printStackTrace());
-                }
-                if(!pageFromTextField.getText().equals("")){
-                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getVolumeInfo().getPageCount() >= Integer.parseInt(pageFromTextField.getText()))
-                            .subscribe(item -> {
-                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
-                            }, throwable -> throwable.printStackTrace());
-                }
-                if(!pageToTextField.getText().equals("")){
-                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getVolumeInfo().getPageCount() <= Integer.parseInt(pageToTextField.getText()))
-                            .subscribe(item -> {
-                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
-                            }, throwable -> throwable.printStackTrace());
-                }
-                if(ebookCheckBox.isSelected()){
-                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getSaleInfo().isEbook() == true)
-                            .subscribe(item -> {
-                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
-                            }, throwable -> throwable.printStackTrace());
-                }
-                if(avaibleCheckBox.isSelected()){
-                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getAccessInfo().getEpub().isAvailable() == true)
-                            .subscribe(item -> {
-                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
-                            }, throwable -> throwable.printStackTrace());
-                }
-                if(pdfCheckBox.isSelected()){
-                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getAccessInfo().getPdf().isAvailable() == true)
-                            .subscribe(item -> {
-                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
-                            }, throwable -> throwable.printStackTrace());
-                }
-                if(matureCheckBox.isSelected()){
-                    new ObservableFromIterable<>(booksObservableList).filter(item -> item.getVolumeInfo().getMaturityRating() != "NOT_MATURE")
-                            .subscribe(item -> {
-                                if(!tmpBookList.contains(item)) tmpBookList.add(item);
-                            }, throwable -> throwable.printStackTrace());
-                }
-
+                System.out.println(tmpBookList.size());
                 booksListView.setItems(tmpBookList);
                 booksListView.setCellFactory(studentListView -> new ListCellCustom());
 

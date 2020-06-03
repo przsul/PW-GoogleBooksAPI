@@ -186,6 +186,7 @@ public class MainWindowController {
 
                     ContextMenu contextMenu = new ContextMenu();
                     MenuItem menuItem = new MenuItem("Otwórz w przeglądarce");
+                    MenuItem menuItem2 = new MenuItem("Otwórz przeglądarkę PDF");
 
                     menuItem.setOnAction(a -> {
                         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
@@ -196,7 +197,21 @@ public class MainWindowController {
                             }
                     });
 
-                    contextMenu.getItems().addAll(menuItem);
+                    menuItem2.setOnAction(a -> {
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(this.getClass().getResource("/FXML/PDFViewer.fxml"));
+                        StackPane stackPane;
+                        try {
+                            stackPane = loader.load();
+                            App.stackPane.getChildren().setAll(stackPane);
+                            PDFViewer controller = loader.<PDFViewer>getController();
+                            controller.setUrl(getClass().getResource("/HTML/index.html").toString() + "?isbn=" + cell.getItem().getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier());
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    });
+
+                    contextMenu.getItems().addAll(menuItem, menuItem2);
 
                     cell.setOnContextMenuRequested(c -> {
                         contextMenu.show(cell, c.getScreenX(), c.getScreenY());

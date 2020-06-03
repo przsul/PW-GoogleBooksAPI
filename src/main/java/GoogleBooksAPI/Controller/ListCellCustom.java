@@ -1,15 +1,10 @@
 package GoogleBooksAPI.Controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import GoogleBooksAPI.Models.ContainerGoogleBook;
 import GoogleBooksAPI.Models.ContainerGoogleBook.Item;
-import GoogleBooksAPI.Models.ImageUrl;
-import io.reactivex.internal.operators.observable.ObservableFromArray;
 import io.reactivex.internal.operators.observable.ObservableFromCallable;
-import io.reactivex.internal.operators.observable.ObservableFromIterable;
 import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +13,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import org.apache.http.client.ClientProtocolException;
 
 public class ListCellCustom extends ListCell<Item> {
 
@@ -45,10 +39,8 @@ public class ListCellCustom extends ListCell<Item> {
 
     private FXMLLoader mLLoader;
 
-
-
-    public ListCellCustom() { }
-
+    public ListCellCustom() {
+    }
 
     @Override
     protected void updateItem(Item book, boolean empty) {
@@ -79,7 +71,6 @@ public class ListCellCustom extends ListCell<Item> {
                     authorsLabel += author + ", ";
             }
 
-
             author.setText(authorsLabel);
             year.setText(book.getVolumeInfo().getPublishedDate());
             publisher.setText(book.getVolumeInfo().getPublisher());
@@ -105,7 +96,4 @@ public class ListCellCustom extends ListCell<Item> {
         }
 
     }
-
-
-
 }

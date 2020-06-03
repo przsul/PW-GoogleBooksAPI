@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 
 
 public class App extends Application {
+
+    public static StackPane stackPane;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -17,7 +20,7 @@ public class App extends Application {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("/FXML/MainWindow.fxml"));
-        StackPane stackPane = loader.load();
+        stackPane = loader.load();
         Scene scene = new Scene(stackPane);
 
         primaryStage.setScene(scene);

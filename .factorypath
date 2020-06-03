@@ -9,6 +9,10 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/openjfx/javafx-fxml/15-ea+5/javafx-fxml-15-ea+5-win.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/io/reactivex/rxjava2/rxjava/2.2.17/rxjava-2.2.17.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/openjfx/javafx-web/15-ea+5/javafx-web-15-ea+5.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/openjfx/javafx-web/15-ea+5/javafx-web-15-ea+5-win.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/openjfx/javafx-media/15-ea+5/javafx-media-15-ea+5.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/openjfx/javafx-media/15-ea+5/javafx-media-15-ea+5-win.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/io/reactivex/rxjava2/rxjavafx/2.2.2/rxjavafx-2.2.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar" enabled="true" runInBatchMode="false"/>

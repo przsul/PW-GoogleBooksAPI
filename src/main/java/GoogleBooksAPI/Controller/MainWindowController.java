@@ -202,12 +202,18 @@ public class MainWindowController {
                         loader.setLocation(this.getClass().getResource("/FXML/PDFViewer.fxml"));
                         StackPane stackPane;
                         try {
-                            stackPane = loader.load();
-                            App.stackPane.getChildren().setAll(stackPane);
-                            PDFViewer controller = loader.<PDFViewer>getController();
-                            controller.setUrl(getClass().getResource("/HTML/index.html").toString() + "?isbn=" + cell.getItem().getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier());
+                            String isbn = cell.getItem().getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier();
+                            boolean elo = isbn.matches("[0-9]+");
+                            if(elo) {
+                                stackPane = loader.load();
+                                App.stackPane.getChildren().setAll(stackPane);
+                                PDFViewer controller = loader.<PDFViewer>getController();
+                                controller.setUrl(getClass().getResource("/HTML/index.html").toString() + "?isbn=" + isbn);
+                            } else
+                                System.out.println("Dziwny ISBN");
+
+
                         } catch (IOException e1) {
-                            e1.printStackTrace();
                         }
                     });
 
@@ -305,12 +311,18 @@ public class MainWindowController {
                                         loader.setLocation(this.getClass().getResource("/FXML/PDFViewer.fxml"));
                                         StackPane stackPane;
                                         try {
-                                            stackPane = loader.load();
-                                            App.stackPane.getChildren().setAll(stackPane);
-                                            PDFViewer controller = loader.<PDFViewer>getController();
-                                            controller.setUrl(getClass().getResource("/HTML/index.html").toString() + "?isbn=" + cell.getItem().getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier());
+                                            String isbn = cell.getItem().getVolumeInfo().getIndustryIdentifiers()[0].getIdentifier();
+                                            boolean elo = isbn.matches("[0-9]+");
+                                            if(elo) {
+                                                stackPane = loader.load();
+                                                App.stackPane.getChildren().setAll(stackPane);
+                                                PDFViewer controller = loader.<PDFViewer>getController();
+                                                controller.setUrl(getClass().getResource("/HTML/index.html").toString() + "?isbn=" + isbn);
+                                            } else
+                                                System.out.println("Dziwny ISBN");
+
+
                                         } catch (IOException e1) {
-                                            e1.printStackTrace();
                                         }
                                     });
 

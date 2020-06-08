@@ -31,6 +31,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
@@ -86,6 +87,9 @@ public class MainWindowController {
     @FXML
     private Button setCryteriaButton;
 
+    @FXML
+    private ProgressIndicator spinner;
+
     private int actualPage = 1;
     private int maxResults = 40;
     private int maxPages = 0;
@@ -102,6 +106,8 @@ public class MainWindowController {
             if (!queryTextField.getText().equals("")) {
                 System.out.println("MAM COS WPISANE");
                 System.out.println(queryTextField.getText());
+                booksListView.setVisible(false);
+                spinner.setVisible(true);
                 sendQuery(queryTextField.getText());
             } else {
                 System.out.println("NIE MAM NIC WPISANEGO WYSWIETLE ALERT");
@@ -113,6 +119,7 @@ public class MainWindowController {
         btnNextPageEvent.subscribe(v -> {
             if (!lastQuery.equals("")) {
                 actualPage++;
+                spinner.setVisible(true);
                 sendQuery(lastQuery);
                 actualPageLabel.setText("Aktualna strona: " + actualPage + "/" + maxPages);
                 if (actualPage == maxPages) {
@@ -130,6 +137,7 @@ public class MainWindowController {
         btnPreviousPageEvent.subscribe(v -> {
             if (!lastQuery.equals("")) {
                 actualPage--;
+                spinner.setVisible(true);
                 sendQuery(lastQuery);
                 actualPageLabel.setText("Aktualna strona: " + actualPage + "/" + maxPages);
                 if (actualPage == 1) {
@@ -334,6 +342,8 @@ public class MainWindowController {
 
                                     return cell;
                                 });
+                                booksListView.setVisible(true);
+                                spinner.setVisible(false);
                             });
                         });
     }

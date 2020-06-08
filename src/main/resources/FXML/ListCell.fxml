@@ -13,7 +13,7 @@
             <ImageView fx:id="smallThumbnail" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" />
          </children>
       </VBox>
-      <VBox prefHeight="150.0" prefWidth="400.0">
+      <VBox prefHeight="150.0" prefWidth="1060.0">
          <children>
             <HBox prefHeight="25.0" prefWidth="100.0">
                <children>
@@ -22,7 +22,7 @@
                         <Insets right="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="title" text="x" />
+                  <Label fx:id="title" prefHeight="17.0" prefWidth="1002.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -35,7 +35,7 @@
                         <Insets right="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="author" text="x" />
+                  <Label fx:id="author" prefHeight="17.0" prefWidth="1003.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -48,7 +48,7 @@
                         <Insets right="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="year" text="x" />
+                  <Label fx:id="year" prefHeight="17.0" prefWidth="960.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -61,7 +61,7 @@
                         <Insets right="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="publisher" text="x" />
+                  <Label fx:id="publisher" prefHeight="17.0" prefWidth="951.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -74,7 +74,7 @@
                         <Insets right="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="isbn" text="x" />
+                  <Label fx:id="isbn" prefHeight="17.0" prefWidth="1004.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
